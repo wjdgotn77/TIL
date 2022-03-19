@@ -1,3 +1,5 @@
+// 예제 1번
+
 var a = 1;
 
 function outer() {
