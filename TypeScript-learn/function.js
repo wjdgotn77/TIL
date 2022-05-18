@@ -77,3 +77,68 @@ function 결혼가능하냐(money, house, charm) {
     }
 }
 console.log(결혼가능하냐(100, true, "상"));
+// Narrowing
+// typeof 변수
+// 속성명 in 오브젝트자료
+// 인스턴스 instanceof 부모
+function myFunc(x) {
+    var array = [];
+    if (typeof x === "number") {
+        array[0] = x;
+    }
+    else {
+        return;
+    }
+    // Assertion 문법 (타입 덮어쓰기)
+    // 편하다고 막 쓰면 안된다. => 남이 짠 코드를 수정할 때 또는 왜 타입에러가 나는지 모르겠을 때 비상용으로 주로 쓴다.
+    // <용도>
+    // 1. narrowing 할 때 쓴다. => 타입을 a 에서 b로 변경할 때 쓰는 것이 아니다.
+    // 2. 어떤 타입이 들어올지 100% 확실할 때 사용해야 한다.
+    var array2 = [];
+    array2[0] = x; // 왼쪽의 변수를 오른쪽의 타입으로 덮어씌워주세요 라는 뜻.
+}
+myFunc(123);
+function 변환기(data) {
+    return JSON.parse(data);
+}
+var jake = 변환기('{"name":"kim"}');
+var ar = [1, 2, "3", 4];
+// 숙제 1번.
+function cleanStr(x) {
+    var answer = [];
+    x.forEach(function (item) {
+        if (typeof item === "string") {
+            answer.push(+item);
+        }
+        else {
+            answer.push(item);
+        }
+    });
+    return answer;
+}
+console.log(cleanStr(ar));
+// 숙제 2번.
+var 철수쌤 = { subject: "math" };
+var 영희쌤 = { subject: ["science", "english"] };
+var 민수쌤 = { subject: ["science", "art", "korean"] };
+function returnLastSubject(x) {
+    if (typeof x.subject === "string") {
+        return x.subject;
+    }
+    else if (Array.isArray(x.subject)) {
+        return x.subject[x.subject.length - 1];
+    }
+    else {
+        return;
+    }
+}
+console.log(returnLastSubject(철수쌤));
+var 동물 = 123;
+var 출생지역 = { region: "Seoul" };
+var assign2 = { color: "white", size: 1, position: [1, 2, 3] };
+var practiceAlias = { name: "kim", phone: 123, email: "abc@naver.com" };
+var 회원가입정보 = {
+    name: "kim",
+    adult: false,
+    phone: 123444444
+};

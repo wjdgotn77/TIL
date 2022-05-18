@@ -97,3 +97,143 @@ function 결혼가능하냐(
   }
 }
 console.log(결혼가능하냐(100, true, "상"));
+
+// Narrowing
+// typeof 변수
+// 속성명 in 오브젝트자료
+// 인스턴스 instanceof 부모
+function myFunc(x: number | string) {
+  let array: number[] = [];
+  if (typeof x === "number") {
+    array[0] = x;
+  } else {
+    return;
+  }
+
+  // Assertion 문법 (타입 덮어쓰기)
+  // 편하다고 막 쓰면 안된다. => 남이 짠 코드를 수정할 때 또는 왜 타입에러가 나는지 모르겠을 때 비상용으로 주로 쓴다.
+  // <용도>
+  // 1. narrowing 할 때 쓴다. => 타입을 a 에서 b로 변경할 때 쓰는 것이 아니다.
+  // 2. 어떤 타입이 들어올지 100% 확실할 때 사용해야 한다.
+
+  let array2: number[] = [];
+  array2[0] = x as number; // 왼쪽의 변수를 오른쪽의 타입으로 덮어씌워주세요 라는 뜻.
+}
+
+myFunc(123);
+
+// Assertion 추가 설명.
+// as 키워드 사용시 특징.
+// 1. as 키워드는 union type 같은 복잡한 타입을 하나의 정확한 타입으로 줄이는 역할을 수행한다.(number 타입을 as string 이렇게 바꾸려고 하면 에러)
+// 2. 타입실드 임시 해제용이다. 실제 코드 실행결과는 as 있을 때나 없을 때나 거의 동일하다.
+
+// 예전 assertion 문법.
+// let 이름 :number = 123;
+// (이름 as string) + 1;  //현재문법
+// <string>이름 + 1;   //옛날문법 : 리액트의 jsx랑 헷갈릴 수 있다.
+
+// 유용하게 쓰일 때.
+// 가끔 타입을 강제로 부여하는 기계를 하나 만들어쓰고 싶은 때가 있습니다.
+// 그럴 때 함수에 데이터를 넣으면 as 타입명을 붙여서 return 하는 함수를 만들어서 사용하면 된다.
+type Person = {
+  name: string;
+};
+function 변환기<T>(data: string): T {
+  return JSON.parse(data) as T;
+}
+const jake = 변환기<Person>('{"name":"kim"}');
+
+const ar = [1, 2, "3", 4];
+
+// 숙제 1번.
+function cleanStr(x: (number | string)[]): number[] {
+  let answer: number[] = [];
+
+  x.forEach((item) => {
+    if (typeof item === "string") {
+      answer.push(+item);
+    } else {
+      answer.push(item);
+    }
+  });
+
+  return answer;
+}
+
+console.log(cleanStr(ar));
+
+// 숙제 2번.
+let 철수쌤 = { subject: "math" };
+let 영희쌤 = { subject: ["science", "english"] };
+let 민수쌤 = { subject: ["science", "art", "korean"] };
+
+function returnLastSubject(x: { subject: string | string[] }): string {
+  if (typeof x.subject === "string") {
+    return x.subject;
+  } else if (Array.isArray(x.subject)) {
+    return x.subject[x.subject.length - 1];
+  } else {
+    return;
+  }
+}
+
+console.log(returnLastSubject(철수쌤));
+
+// Type 키워드 => Type alias & read only
+// 대문자로 쓰기.
+type Animal = string | number | undefined;
+let 동물: Animal = 123;
+
+type Person1 = { name: string; age: number };
+
+// Object 내 자료 수정을 막을 수 있다. Object Read Only (읽기 전용)
+type City = {
+  readonly region: string;
+};
+
+const 출생지역: Aria = { region: "Seoul" };
+// 출생지역.region = 'Pusan'; Error 발생.
+//타입스크립트 에러는 에디터 & 터미널에만 존재함 => 실제 js 파일은 실행된다.
+
+// region이 있어도 되고 없어도 되고~
+type City2 = {
+  region?: string;
+};
+
+// Type 변수도 Union Type으로 합치기 가능.
+// Type 사용할 때 주의점 같은 이름의 Type 변수 재정의 불가능
+
+// type Name = string;
+// type Age = number;
+// type Person2 = Name | Age;
+
+// & 연산자로 Object Extend 한다. (합친다)
+type PositionX = { x: number };
+type PositionY = { y: number };
+// 하고 싶은 것은 { x : number, y: number }
+type NewPosition = PositionX & PositionY; //{ x : number, y: number }
+
+// 숙제 1번
+// type Aame = string;
+// type Bame = string;
+
+// 숙제 2번
+type Assign2 = { color?: string; size: number; readonly position: number[] };
+const assign2: Assign2 = { color: "white", size: 1, position: [1, 2, 3] };
+
+// 숙제 3번
+type Name = { name: string };
+type Phone = { phone: number };
+type Email = { email: string };
+
+type User = { name: string; email?: string; phone: number };
+const practiceAlias = { name: "kim", phone: 123, email: "abc@naver.com" };
+
+type Adult = { adult: boolean };
+type NewUser = User & Adult;
+
+let 회원가입정보: NewUser = {
+  name: "kim",
+  adult: false,
+  phone: 123444444,
+};
