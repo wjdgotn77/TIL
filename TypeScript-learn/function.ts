@@ -191,7 +191,7 @@ type City = {
   readonly region: string;
 };
 
-const 출생지역: Aria = { region: "Seoul" };
+// const 출생지역: Aria = { region: "Seoul" };
 // 출생지역.region = 'Pusan'; Error 발생.
 //타입스크립트 에러는 에디터 & 터미널에만 존재함 => 실제 js 파일은 실행된다.
 
