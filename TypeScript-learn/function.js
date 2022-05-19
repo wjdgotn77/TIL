@@ -135,3 +135,33 @@ var 회원가입정보 = {
   adult: false,
   phone: 123444444,
 };
+// Literal Type
+function rsp(x) {
+  return [x];
+}
+rsp("가위");
+// const 변수의 한계 => reference 타입이라서 내부적으로 바꿀 수 있음.
+// Literal Type은 const 변수와 유사하게 사용할 수 있다. 자료를 여러개 저장할 수 있다.
+var 자료 = {
+  name: "kim",
+};
+// Kim 이라는 타입만 들어올 수 있다는 뜻.
+// 자료.name은 'string' 타입임.
+function 내함수(a) {
+  return a;
+}
+자료.name;
+내함수(자료.name); // 에러가 난다.
+// 해결 방법
+// 1. var 자료 : {name: 'kim'} = {
+//      name: "kim",
+//    };
+// 2. Assertion을 사용 => 내함수(자료.name as 'kim')
+// 3. as const 를 사용해서 object value 값을 그대로 타입으로 지정해준다.
+//      var 자료 = {
+//      name: "kim",
+//    } as const;
+// as const
+// Object 자료를 완전히 잠가놓고 싶으면 as const 를 써보기.
+// 효과1. object value 값을 그대로 타입으로 지정해줌.
+// 효과2. object 속성들에 모두 readonly를 붙여준다.
