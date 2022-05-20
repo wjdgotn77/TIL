@@ -273,3 +273,60 @@ function 내함수(a: "kim") {
 // Object 자료를 완전히 잠가놓고 싶으면 as const 를 써보기.
 // 효과1. object value 값을 그대로 타입으로 지정해줌.
 // 효과2. object 속성들에 모두 readonly를 붙여준다.
+
+// 함수와 methods에 type alias 지정하는 법.
+
+// 함수 type alias
+type NumOut = (x: number, y: number) => number;
+// 함수 표현식으로 type 지정을 한다.
+const ABC: NumOut = function (x, y) {
+  return x + y;
+};
+
+// method 안에 타입 지정하기.
+type A = {
+  name: string;
+  age: 30;
+  plusOne: (x: number) => number;
+  changeName: () => void;
+};
+
+const 회원정보: A = {
+  name: "kim",
+  age: 30,
+  plusOne(x) {
+    return x + 1;
+  },
+  changeName: () => {
+    console.log("안녕");
+  },
+};
+
+회원정보.plusOne(1);
+회원정보.changeName();
+
+type Arr = (x: string) => string;
+
+const cutZero: Arr = (x) => {
+  x;
+  const arr = x.split("");
+  return arr.splice(1, arr.length).join("");
+};
+
+type R = (x: string) => number;
+
+let removeDash: R = (x) => {
+  return +x.split("-").join("");
+};
+
+console.log(cutZero("0eeeee"));
+console.log(removeDash("010-7226-2627"));
+
+type 만들함수 = (x: string, y: Arr, z: R) => number;
+
+const 함수다함수: 만들함수 = (x, y, z) => {
+  const firstResult = y(x);
+  return z(firstResult);
+};
+
+console.log(함수다함수("010-1111-2222", cutZero, removeDash));
