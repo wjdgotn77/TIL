@@ -147,3 +147,29 @@ function 함수(animal: Fish | Bird) {
 function 함수(): never {
   throw new Error("에러메세지");
 }
+
+// 정리.
+// 1. 무언가 리턴하지 않고 2. 끝나지도 않는 함수를 표현하고 싶을 때 never 타입을 지정한다.
+// 그러나, 2번 조건의 함수를 만들 일이 거의 없기 때문에 never 타입은 쓸 일이 거의 없다.
+// 무언가 return 하고 싶지 않다면 void 타입을 이용한다.
+
+// 가끔 코드 이상하게 짜면 자동으로 never가 등장한다.
+
+// 1. Parameter가 Never Type이 되는 경우가 있다.
+function 함수(parameter: string) {
+  if (typeof parameter === "string") {
+    parameter + 1;
+  } else {
+    // 위에 () 내에 parameter를 string으로 정의 해놓고,
+    // parameter의 타입이 string이 아니라면, else 의 코드를 실행시키는 것으로 말이 안된다.
+    // 그래서 마우스 hover 해보면 never 타입으로 정의 되어있음.
+    parameter;
+  }
+}
+
+// 2. 자동으로 Never Type 을 가지는 경우.
+// 함수 표현식에서 아무것도 return 하지 않고 끝나지도 않는 경우 return 의 타입이 never 타입으로 할당된다.
+// => 함수 선언문은 같은 경우 void
+
+// 3. tsconfig.json 에서 strict 옵션을 켜둘 경우 함부러 any 타입을 지정해주지 않는 경우가 있음.
+// 그럴 때 array 같은 것을 대충 타입 지정 없이 만들면, 원래는 array[] 이런 타입이 되는데 any를 가질 수 없어서 never[] 이런 타입이 발견되기도 함.
