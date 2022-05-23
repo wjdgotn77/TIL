@@ -72,3 +72,38 @@ function sayParams(_a) {
     console.log(a, b, c);
 }
 sayParams([40, "wine", false]);
+// Null & Undefined 체크하는 방법.
+var 변수 = undefined;
+var strs = "바나나";
+// 변수가 undefined 라면 undefined가 남아서 if 문이 실행되지 않는다.
+// if문 조건식 안에 falsy 한 값이 남으면 실행되지 않으니까~~
+if (변수 && typeof strs === "string") {
+    console.log(strs);
+}
+function 함수(x) {
+    if (x.wheel === "4개") {
+        console.log("이 차는 " + x.color);
+    }
+    else {
+        console.log("이 바이크는 " + x.color);
+    }
+}
+function 함수(animal) {
+    if ("swim" in animal) {
+        return animal.swim;
+    }
+    return animal.fly;
+}
+// Never Type
+// function 함수(): never {
+// // 1. 절대 return 을 하지 않는다.
+// // 2. 함수 실행이 끝나지 않아야 한다. (endpoint 가 없어야 한다.)
+// // 아래 처럼 무한하게 실행되기 때문에 사용이 가능.
+// while (true) {
+//   console.log(123);
+// }
+// }
+// Throw new error 문법에도 사용할 수 있다.
+function 함수() {
+    throw new Error("에러메세지");
+}
