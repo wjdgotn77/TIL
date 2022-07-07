@@ -133,6 +133,7 @@ function 함수(animal: Fish | Bird) {
   return animal.fly;
 }
 
+// --------------------------------------------------------------------------
 // Never Type
 // function 함수(): never {
 // // 1. 절대 return 을 하지 않는다.
@@ -172,4 +173,10 @@ function 함수(parameter: string) {
 // => 함수 선언문은 같은 경우 void
 
 // 3. tsconfig.json 에서 strict 옵션을 켜둘 경우 함부러 any 타입을 지정해주지 않는 경우가 있음.
-// 그럴 때 array 같은 것을 대충 타입 지정 없이 만들면, 원래는 array[] 이런 타입이 되는데 any를 가질 수 없어서 never[] 이런 타입이 발견되기도 함.
+// 그럴 때 array 같은 것을 대충 타입 지정 없이 만들면, 원래는 array[] 이런 타입이 되는데,
+// any를 가질 수 없어서 never[] 이런 타입이 발견되기도 함.
+
+// ------------------------------------------------------
+
+// Public, Private 키워드로 사용 제한 두기.
+// 타입스크립트를 사용하면 자바스크립트에 없는 문법도 사용할 수가 있음. => public, private, static, protected
